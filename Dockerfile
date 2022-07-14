@@ -8,6 +8,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-ENTRYPOINT [ "python", "./main.py"]
+ENTRYPOINT [ "python", "./app/main.py"]
 
 CMD [ URL]

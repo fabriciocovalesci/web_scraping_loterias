@@ -6,11 +6,11 @@ from bs4 import BeautifulSoup, Tag, NavigableString
 import aiohttp
 import asyncio
 from datetime import date, datetime, timedelta
-from api import Client
 from lxml import etree
 import json
 from unidecode import unidecode
 from datetime import datetime, date, timedelta
+from api import Client
 
 class LotofacilBot(Client):
     
@@ -157,7 +157,6 @@ class LotofacilBot(Client):
             
 
     def check_consurso(self):
-        print(f"http://{self.url_api}")
         resp = requests.get(f"http://{self.url_api}/api/v1/lotofacil/latest/one")
         if resp.status_code == 200:
             return resp.json()["response"][0]["concurso"]
