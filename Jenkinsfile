@@ -32,6 +32,7 @@ pipeline {
         stage('Build image') {
             steps {
                 script {
+                    sh "echo ${URL_API_AWS}"
                     echo "Building image docker ..."
                     sh "docker build -t loteria_bot ."   
                 }        
