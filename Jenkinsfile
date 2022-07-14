@@ -41,7 +41,7 @@ pipeline {
             steps {
                 script {
                     echo "Running image docker ..."
-                    sh "docker run --rm  loteria_bot -u $URL_API_AWS" 
+                    sh "docker run --rm  loteria_bot -u ${URL_API_AWS}" 
                 }
             }
         }
