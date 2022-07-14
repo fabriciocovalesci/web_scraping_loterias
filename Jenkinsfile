@@ -21,6 +21,9 @@ def sendBuildFailureEmail(price) {
 pipeline {
     
     agent any
+    environment {
+        URL_API_AWS = credentials('URL_API_AWS')
+    }
 
     stages {
         stage('Git clone projeto') {
