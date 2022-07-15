@@ -2,6 +2,7 @@
 
 import re
 import requests
+from requests.structures import CaseInsensitiveDict
 from bs4 import BeautifulSoup, Tag, NavigableString
 import aiohttp
 import asyncio
@@ -53,8 +54,8 @@ class LotofacilBot(Client):
         
         if divs:
             acumulou = False
-            data_sorteio = None
-            data_proximo_concurso = None
+            data_sorteio = ""
+            data_proximo_concurso = ""
                 
             wins = divs.find('a', { "class": "button-win" })
             concurso_atual = int(divs.find('span', { 'class' : "color header-resultados__nro-concurso" }).get_text())
@@ -70,12 +71,6 @@ class LotofacilBot(Client):
                 acumulou = False
             else:
                 acumulou = True
-            
-            # print('acertadores ', (wins.attrs["data-acertadores"].isnumeric()))
-            # print('concurso', wins.attrs["data-concurso"])
-            # print('estados-premiados ', wins.attrs["data-estados-premiados"])
-            # print('premio ', wins.attrs["data-premio"])
-            # print('sorteio ', wins.attrs["data-sorteio"])
                         
             dezenas = []
             for item in divs.find_all('li', {"class": "bg"}):
@@ -125,33 +120,37 @@ class LotofacilBot(Client):
             else:
                 data_proximo_concurso = data_prx_concurso
         
-            body_final_lotofacil = {
+            body_lotofacil = {
                 "acumuladaProxConcurso": valor_prx_consurso.strip(),
                 "acumulou": acumulou,
                 "concurso": concurso_atual,
                 "data": data_sorteio,
                 "dataProxConcurso": data_proximo_concurso,
                 "dezenas": dezenas,
-                "estadosPremiados": estados_premiados,
-                "local": local_sorteio,
+                "estadosPremiados": [{"CodigoFaixa":49,"SiglaEstado":"PR","Latitude":"-25.2520888","Longitude":"-52.0215415","NomeEstado":"Paranu00e1","Quantidade":1,"PremiacaoPorCidade":[{"CodigoCidade":3460,"NomeCidade":"Piraquara","Quantidade":1,"Latitude":None,"Longitude":None}]}],
+                "local": "ESPAu00c7ODASORTE em Su00c3OPAULO,SP",
                 "loteria": "lotofacil",
                 "mesSorte": "",
                 "nome": "LotoFacil",
                 "premiacoes": premiacoes,
                 "proxConcurso": int(concurso_atual)+1,
-                "timeCoracao": "string"
+                "timeCoracao": ""
                 }
         else:
-            body_final_lotofacil = {}         
+            body_lotofacil = {}         
         
-        # print(body_final_lotofacil)
-        return body_final_lotofacil
+        return body_lotofacil
     
     def send_loteria(self, concurso_atual,  obj):
         if int(concurso_atual) < int(obj["concurso"]):
-            body_loteria = { "data": json.dumps(obj) }
-            #req = requests.post(f"{BASE_URL_API}/api/v1/lotofacil/update/db", json=body_loteria)
-            print(body_loteria)
+            headers = CaseInsensitiveDict()
+            headers['Content-Type'] = 'application/json'
+            headers['Accept'] = 'text/plain'
+            body_loteria = json.dumps(obj, ensure_ascii=True)
+            # url = 'http://localhost:8000/api/v1/lotofacil/update/db'
+            # req = requests.post(url, data=body_loteria, headers=headers)
+            req = requests.post(f"http://{self.url_api}/api/v1/lotofacil/update/db", data=body_loteria, headers=headers)
+            print(req.json())
         else:
             print("Concurso nao realizado")
             
