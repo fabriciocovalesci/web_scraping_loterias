@@ -11,6 +11,9 @@ from lxml import etree
 import json
 from unidecode import unidecode
 from datetime import datetime, date, timedelta
+import locale
+locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+
 from api import Client
 
 class LotofacilBot(Client):

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import argparse
+import locale
+locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 from lotofacil import LotofacilBot
 
 

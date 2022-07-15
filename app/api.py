@@ -5,7 +5,8 @@ import os
 import asyncio
 import requests
 import json
-
+import locale
+locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
 BASE_URL = "https://www.sorteonline.com.br/"
 
