@@ -11,8 +11,6 @@ from lxml import etree
 import json
 from unidecode import unidecode
 from datetime import datetime, date, timedelta
-import locale
-locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
 from api import Client
 
@@ -68,8 +66,8 @@ class LotofacilBot(Client):
                 
             if _data_sorteio and 'hoje' in _data_sorteio.lower().strip():
                 today_date = date.today()
-                data_sorteio = today_date.strftime("%d/%m/%Y")            
-            
+                data_sorteio = today_date.strftime("%d/%m/%Y") 
+                            
             if wins.attrs["data-acertadores"].isnumeric():
                 acumulou = False
             else:
