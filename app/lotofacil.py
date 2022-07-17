@@ -62,7 +62,12 @@ class LotofacilBot(Client):
             concurso_atual = int(divs.find('span', { 'class' : "color header-resultados__nro-concurso" }).get_text())
             local_sorteio =  divs.find('span', { 'class' : "color header-resultados__local-sorteio" }).get_text()
             _data_sorteio = divs.find('div', { 'class' : "sub-title" }).get_text()
-            estados_premiados = wins.attrs["data-estados-premiados"]
+            estados_premiados = []
+            
+            if wins.attrs["data-estados-premiados"]:
+                estados_premiados = wins.attrs["data-estados-premiados"]
+            
+            
                 
             if _data_sorteio and 'hoje' in _data_sorteio.lower().strip():
                 today_date = date.today()
@@ -128,7 +133,7 @@ class LotofacilBot(Client):
                 "data": data_sorteio,
                 "dataProxConcurso": data_proximo_concurso,
                 "dezenas": dezenas,
-                "estadosPremiados": [{"CodigoFaixa":49,"SiglaEstado":"PR","Latitude":"-25.2520888","Longitude":"-52.0215415","NomeEstado":"Paranu00e1","Quantidade":1,"PremiacaoPorCidade":[{"CodigoCidade":3460,"NomeCidade":"Piraquara","Quantidade":1,"Latitude":None,"Longitude":None}]}],
+                "estadosPremiados": estados_premiados,
                 "local": "ESPAu00c7ODASORTE em Su00c3OPAULO,SP",
                 "loteria": "lotofacil",
                 "mesSorte": "",
