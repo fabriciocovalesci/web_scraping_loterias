@@ -64,8 +64,8 @@ class LotofacilBot(Client):
             _data_sorteio = divs.find('div', { 'class' : "sub-title" }).get_text()
             estados_premiados = []
             
-            if wins.attrs["data-estados-premiados"]:
-                estados_premiados = wins.attrs["data-estados-premiados"]
+            # if wins.attrs["data-estados-premiados"] :
+            #     estados_premiados = wins.attrs["data-estados-premiados"]
             
             
                 
@@ -73,9 +73,12 @@ class LotofacilBot(Client):
                 today_date = date.today()
                 data_sorteio = today_date.strftime("%d/%m/%Y") 
                             
-            if wins.attrs["data-acertadores"].isnumeric():
-                acumulou = False
-            else:
+            # if wins.attrs["data-acertadores"].isnumeric():
+            #     acumulou = False
+            # else:
+            #     acumulou = True
+                
+            if dom.xpath('//*[@id="DivDeVisibilidade[0]"]/div/div[5]/div/div[2]/span[2]/span')[0].text:
                 acumulou = True
                         
             dezenas = []
